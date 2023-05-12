@@ -12,7 +12,7 @@ class LangchainDocSearch(BaseTool):
         Loads the langchain vector store from pickle into a local file
         """
         global vector_store
-        with open("langchain_vectorstore.pkl", "rb") as f:
+        with open("helpers/langchain_vectorstore.pkl", "rb") as f:
             vector_store = pickle.load(f)
 
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
@@ -37,13 +37,14 @@ class AirStackDocSearch(BaseTool):
         Loads the airstack vector store from pickle into a local file
         """
         global vector_store
-        with open("airstack_vectorstore.pkl", "rb") as f:
+        with open("helpers/airstack_vectorstore.pkl", "rb") as f:
             vector_store = pickle.load(f)
 
     def _run(self, query: str) -> str:
         """
         Search the docs and return the most relevant pages content which we will use to feed to the model
         """
+        self.load_vector_store()
         res = vector_store.similarity_search(query)
         if res:
             return res[0].page_content, res[0].metadata['source']
