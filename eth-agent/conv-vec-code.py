@@ -9,6 +9,10 @@ from langchain.memory import VectorStoreRetrieverMemory
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import FAISS
 
+embeddings = OpenAIEmbeddings()
+air_vectorstore = FAISS.load_local("airstack_baby_faiss_index", embeddings)
+
+
 embedding_size = 1536  # Dimensions of the OpenAIEmbeddings
 index = faiss.IndexFlatL2(embedding_size)
 embedding_fn = OpenAIEmbeddings().embed_query
@@ -16,8 +20,9 @@ vectorstore = FAISS(embedding_fn, index, InMemoryDocstore({}), {})
 
 # In actual usage, you would set `k` to be a higher value, but we use k=1 to show that
 # the vector lookup still returns the semantically relevant information
-retriever = vectorstore.as_retriever(search_kwargs=dict(k=10))
-memory = VectorStoreRetrieverMemory(retriever=retriever)
+# retriever = vectorstore.as_retriever(search_kwargs=dict(k=10))
+retriver = air_vectorstore.as_retriever(search_kwargs=dict(k=5))
+memory = VectorStoreRetrieverMemory(retriever=retriver)
 
 # When added to an agent, the memory object can save pertinent information from conversations or used tools
 memory.save_context(

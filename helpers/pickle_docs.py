@@ -54,6 +54,6 @@ ingest_docs(
     docs_loc="https://docs.airstack.xyz", docs_name="airstack_baby", gitbook=True
 )
 
-""" embeddings = OpenAIEmbeddings()
-vectorstore = FAISS.load_local('airstack_faiss_index', embeddings)
-print(vectorstore) """
+embeddings = OpenAIEmbeddings()
+vectorstore = FAISS.load_local("airstack_faiss_index", embeddings)
+print(vectorstore)
