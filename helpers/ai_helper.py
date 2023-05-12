@@ -1,7 +1,8 @@
 """
 This is an AI helper which will query the docs of required libraries and attempt to write valid code using them
 """
-from retrieve_docs import LangchainDocSearch
+from retrieve_docs import LangchainDocSearch, AirStackDocSearch
+from CodeWriter import PythonCodeWriter
 from langchain.llms import OpenAI
 from langchain.agents import initialize_agent, AgentType
 from langchain.agents import load_tools
@@ -19,9 +20,38 @@ tools = [
     #     func=search.run,
     #     description="Useful for when you need to search langchain docs"
     # ),
-    LangchainDocSearch()
+    LangchainDocSearch(),
+    PythonCodeWriter(),
+    AirStackDocSearch()
 ]
 
 agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
 print(agent.agent.llm_chain.prompt.template)
-agent.run({'input': "Can you write python code to create a local vectorstore to store embeddings from a csv file? Return Python code only.", 'chat_history': []})
+agent.run({'input': "Can you tell me how to get all nfts owned by spink.eth using airstack", 'chat_history': []})
+
+
+"""
+import langchain
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.llms import OpenAI
+from langchain.chains import RetrievalQA
+
+llm = OpenAI(temperature=0)
+
+from pathlib import Path
+relevant_parts = []
+for p in Path(".").absolute().parts:
+    relevant_parts.append(p)
+    if relevant_parts[-3:] == ["langchain", "docs", "modules"]:
+        break
+doc_path = str(Path(*relevant_parts) / "some_cool_data.csv")
+
+from langchain.document_loaders import TextLoader
+loader = TextLoader(doc_path)
+documents = loader.load()
+
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+texts = text_spl
+"""
