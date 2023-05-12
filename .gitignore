@@ -1,0 +1,6 @@
+.history/
+.ipynb_checkpoints/
+.venv/
+rtdocs/
+langchain_vectorstore.pkl
+.DS_Store
