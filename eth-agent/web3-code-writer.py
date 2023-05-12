@@ -1,18 +1,17 @@
-import subprocess
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts.chat import (
-    ChatPromptTemplate,
-    SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate,
-)
-
 import os
-
 import re
+import subprocess
 from typing import Dict, List
 
 # load env variables
 from dotenv import load_dotenv
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts.chat import (
+    ChatPromptTemplate,
+    HumanMessagePromptTemplate,
+    SystemMessagePromptTemplate,
+)
+from langchain.memory import ConversationBufferWindowMemory
 
 load_dotenv()
 
@@ -37,10 +36,11 @@ you are a natural language to eth agent.
 
 think about how to solve the given problem using web3.py. 
 
-
 my wallet is already setup and libaries are installed. and connected using infura
 
 return single a python function called command to complete the task like,
+
+do not import any aditional libaries
 
 ```python
 
@@ -67,6 +67,10 @@ return a full python file that can be run from main.py, including the example co
 
 """
 
+from langchain.llms import OpenAI
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+
 
 chat = ChatOpenAI(temperature=0)
 
@@ -80,11 +84,28 @@ chat_prompt = ChatPromptTemplate.from_messages(
     [system_message_prompt, human_message_prompt]
 )
 
+llm = OpenAI(temperature=0)
+conversation = ConversationChain(
+    llm=llm,
+    verbose=True,
+    memory=ConversationBufferMemory(),
+)
+
+conversation.predict(input="Hi there!")
+
 # get a chat completion from the formatted messages
-resp = chat(chat_prompt.format_prompt(text="swap all my eth for dai").to_messages())
+# resp = chat(chat_prompt.format_prompt(text="stake my eth").to_messages())
 
 
-code = extract_code_from_response(resp.content)
+# code = extract_code_from_response(resp.content)
 
 with open("test3.py", "w") as f:
     f.write("\n".join(code["python"]))
+
+
+# read the file back in then run it using subprocess
+with open("test3.py", "r") as f:
+    code = f.read()
+
+# run the code
+subprocess.run(["python", "test3.py"], capture_output=True)
