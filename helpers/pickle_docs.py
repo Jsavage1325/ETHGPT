@@ -1,4 +1,4 @@
-import pickle
+#import pickle
 import os
 from langchain.document_loaders import ReadTheDocsLoader, GitbookLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -42,10 +42,14 @@ def ingest_docs(docs_loc: str="rtdocs", docs_name: str='langchain', gitbook=Fals
     
     print(docs[0].page_content)
 
-    # Save vectorstore
-    with open(f"{docs_name}_vectorstore.pkl", "wb") as f:
-        pickle.dump(vectorstore, f)
+    # Save vectorstore as txt file
+    vectorstore.save_local(f"{docs_name}_faiss_index")
+    
 
 #download_docs('https://docs.airstack.xyz', 'airstack')
 # download_docs('https://python.langchain.com/', 'langchain')
-#ingest_docs(docs_loc='https://docs.airstack.xyz',docs_name='airstack',gitbook=True)
+##ingest_docs(docs_loc='web3_py',docs_name='web3_py')
+
+embeddings = OpenAIEmbeddings()
+vectorstore = FAISS.load_local('airstack_faiss_index', embeddings)
+print(vectorstore)
