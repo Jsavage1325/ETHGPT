@@ -7,3 +7,5 @@ langchain_vectorstore.pkl
 .vscode/settings.json
 .env
 wallet.json
+*.pkl
+*.pyc
