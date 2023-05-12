@@ -6,3 +6,4 @@ langchain_vectorstore.pkl
 .DS_Store
 .vscode/settings.json
 .env
+wallet.json

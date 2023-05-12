@@ -1,3 +1,4 @@
+import subprocess
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts.chat import (
     ChatPromptTemplate,
@@ -34,7 +35,8 @@ def extract_code_from_response(response: str) -> Dict[str, List[str]]:
 sys_message = """
 you are a natural language to eth agent. 
 
-execute commands using web3.py. 
+think about how to solve the given problem using web3.py. 
+
 
 my wallet is already setup and libaries are installed. and connected using infura
 
@@ -43,17 +45,25 @@ return single a python function called command to complete the task like,
 ```python
 
 from web3 import Web3
+import json
 
 # Connect to web3 using Infura
-infura_url = "https://mainnet.infura.io/v3/f4149201e122477882ce3ec91ed8a37b"
+infura_url = "https://goerli.infura.io/v3/f4149201e122477882ce3ec91ed8a37b"
 web3 = Web3(Web3.HTTPProvider(infura_url))
 
+#load the wallet data from the file
+with open("wallet.json", "r") as infile:
+    wallet_data = json.load(infile)
+    
+private_key = wallet_data["private_key"]
+
 # Set the account address and private key
-account_address = "<YOUR_ACCOUNT_ADDRESS>"
-private_key = "<YOUR_ACCOUNT_PRIVATE_KEY>"
+account = Account.from_key(private_key)
 
 def function_to_complete_command():
 ```
+
+return a full python file that can be run from main.py, including the example code above.
 
 """
 
@@ -71,7 +81,7 @@ chat_prompt = ChatPromptTemplate.from_messages(
 )
 
 # get a chat completion from the formatted messages
-resp = chat(chat_prompt.format_prompt(text="send eth to spink.eth").to_messages())
+resp = chat(chat_prompt.format_prompt(text="swap all my eth for dai").to_messages())
 
 
 code = extract_code_from_response(resp.content)

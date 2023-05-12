@@ -1,15 +1,21 @@
-import os
-from web3 import Web3
+from eth_account import Account
+import secrets
+import json
 
-INFURA_PROJECT_ID = "f4149201e122477882ce3ec91ed8a37b"
-INFURA_URL = f"https://goerli.infura.io/v3/{INFURA_PROJECT_ID}"
-web3 = Web3(Web3.HTTPProvider(INFURA_URL))
+priv = secrets.token_hex(32)
+private_key = "0x" + priv
+print("SAVE BUT DO NOT SHARE THIS:", private_key)
+acct = Account.from_key(private_key)
+print("Address:", acct.address)
 
-new_wallet = web3.eth.account.create()
-wallet_address = new_wallet.address
+# write all of the wallet data to a file as json
+wallet_data = {"private_key": private_key, "address": acct.address}
 
-balance_in_wei = web3.eth.get_balance(wallet_address)
-balance_in_eth = web3.from_wei(balance_in_wei, "ether")
+with open("wallet.json", "w") as outfile:
+    json.dump(wallet_data, outfile)
 
-print(f"New Wallet Address: {wallet_address}")
-print(f"Wallet Balance: {balance_in_eth} Ether")
+# load the wallet data from the file
+with open("wallet.json", "r") as infile:
+    wallet_data = json.load(infile)
+
+private_key = wallet_data["private_key"]
