@@ -13,7 +13,8 @@ def download_docs(docs_url: str, output_name: str):
     !wget -r -A.html -P {output_name} {docs_url}
     """
     # !wget -r -A.html -P {output_name} {docs_url}
-    command = f"wget -r -A.html -P {output_name} {docs_url}"
+    # command = f"wget -erobots=off -r -A.html -P {output_name} {docs_url}"
+    command = f"wget --recursive --no-parent --random-wait --limit-rate=200k --wait=1 -e robots=off --no-check-certificate -U \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3\" -P {output_name} {docs_url}"
     subprocess.run(command, shell=True)
 
 def ingest_docs(docs_loc: str="rtdocs", docs_name: str='langchain'):
@@ -41,4 +42,5 @@ def ingest_docs(docs_loc: str="rtdocs", docs_name: str='langchain'):
     with open("vectorstore.pkl", "wb") as f:
         pickle.dump(vectorstore, f)
 
-ingest_docs()
+download_docs('https://docs.airstack.xyz', 'airstack')
+# download_docs('https://python.langchain.com/', 'langchain')
