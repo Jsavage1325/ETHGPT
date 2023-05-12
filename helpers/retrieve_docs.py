@@ -15,10 +15,11 @@ class LangchainDocSearch(BaseTool):
         with open("langchain_vectorstore.pkl", "rb") as f:
             vector_store = pickle.load(f)
 
-    def _run(self, query: str) -> str:
+    def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         """
         Search the docs and return the most relevant pages content which we will use to feed to the model
         """
+        self.load_vector_store()
         res = vector_store.similarity_search(query)
         if res:
             return res[0].page_content, res[0].metadata['source']
@@ -26,3 +27,6 @@ class LangchainDocSearch(BaseTool):
     async def _arun(self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None) -> str:
         """Use the tool asynchronously."""
         raise NotImplementedError("langchain_doc_search does not support async")
+
+
+        
