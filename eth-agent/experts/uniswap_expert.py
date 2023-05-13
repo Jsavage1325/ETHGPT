@@ -21,7 +21,7 @@ class UniswapContextProvider(BaseTool):
         Loads the airstack vector store from pickle into a local file
         """
         global vector_store
-        vector_store = FAISS.load_local("aave_faiss_index", OpenAIEmbeddings())
+        vector_store = FAISS.load_local("uniswap_v3_faiss_index", OpenAIEmbeddings())
 
     def _run(self, query: str) -> str:
         """
