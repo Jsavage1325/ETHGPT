@@ -7,9 +7,8 @@ from typing import Optional
 class OneInchContextProvider(BaseTool):
     name = "one_inch_context_provider"
     description = """Expert who will answer specific questions related to 1inch. 1inch is decentrilised exchange aggregator (DEX). 
-                    1inch is able to split trades across multiple DEXs to get the best price for the user. 
-                    1inch fusion allows users to execute swaps as limit orders with a variable exchange rate.
-                    Return text or 1inch query."""
+                    Uses: Aggregation Protocol (optimal rates, fast swaps) , Limit Order Protocol (flexibile order limits any EVM chains), FusionSwap (gasless front-run resistant swaps with variable exchange), 1inch network DAO.
+                    Return text or javascript."""
 
     def load_vector_store(self):
         """
