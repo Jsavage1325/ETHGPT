@@ -4,10 +4,10 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
 from typing import Optional
 
-class OneInchContextProvider(BaseTool):
-    name = "one_inch_context_provider"
-    description = """Expert who will answer specific questions related to 1inch. 1inch is decentrilised exchange aggregator (DEX). 
-                    Uses: Aggregation Protocol (optimal rates, fast swaps) , Limit Order Protocol (flexibile order limits any EVM chains), FusionSwap (gasless front-run resistant swaps with variable exchange), 1inch network DAO.
+class GnosisContextProvider(BaseTool):
+    name = "gnosis_context_provider"
+    description = """Expert who will answer specific questions related to gnosis. Gnosis is and affordable Ethereum side chain. 
+                    Uses:Deploying Smart Contracts,Interacting with Gnosis,Building Dapps,Verify Contracts,Bridge Tutorials,JSON RPC API Providers,Wallets,Faucets,Data&Analytics,Oracles,Beacon Chain
                     Return text or javascript."""
 
     def load_vector_store(self):
@@ -16,16 +16,17 @@ class OneInchContextProvider(BaseTool):
         """
         embeddings = OpenAIEmbeddings()
         global vector_store
-        vector_store = FAISS.load_local("1inch_faiss_index", embeddings)
+        vector_store = FAISS.load_local("gnosis_faiss_index", embeddings)
 
     def _run(self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None) -> str:
         """
-        Search the 1inch docs and return the most relevant pages content which we will use to feed to the model
+        Search the gnosis docs and return the most relevant pages content which we will use to feed to the model
         """
         self.load_vector_store()
         res = vector_store.similarity_search(query)
         if res:
-            return query + res[0].page_content
+            # sauce res[0].metadata['source']
+            return res[0].page_content + res[1].page_content + res[2].page_content
     
     async def _arun(self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None) -> str:
         """Use the tool asynchronously."""
