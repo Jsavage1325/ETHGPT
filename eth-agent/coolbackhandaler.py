@@ -14,6 +14,7 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
         """Initialize callback handler."""
         self.color = color
         self.status_text = st.empty()
+        self.sources = st.empty()
 
     def on_tool_start(
         self, serialized: Dict[str, Any], input_str: str, **kwargs: Any
@@ -32,6 +33,14 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
     ) -> None:
         """If not the final action, print out observation."""
         # self.disappearing_info_message(f'Finished asking {output}.')
+        try:
+            sources = output.split('|||')[1].split(',')
+            if len(st.session_state["sources"]) > len(st.session_state['generated']):
+                st.session_state["sources"][-1] += sources
+            else:
+                st.session_state["sources"].append(sources)
+        except:
+            pass
         self.status_text = st.text(f'ℹ️ Finished asking tool.')
 
     def on_agent_finish(
@@ -42,19 +51,31 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
         for _ in range(100):
             self.status_text.empty()
 
+    # def format_sources(self, sources):
+    #     formatted_string = ""
+    #     for source in sources:
+    #         formatted_string += f'<a href="{source}">{source}</a>'
+    #         # formatted_string += f"[{source}]({source})\n"
+    #     return formatted_string
+
 
 
 if __name__ == "__main__":
     st.set_page_config(page_title="ETHGPT - God of Web3", page_icon=":robot:")
     st.header("ETHGPT")
 
-    helper = AIHelper(StreamlitCallbackHandler())
+    sch = StreamlitCallbackHandler()
+
+    helper = AIHelper(sch)
 
     if "generated" not in st.session_state:
         st.session_state["generated"] = []
 
     if "past" not in st.session_state:
         st.session_state["past"] = []
+
+    if "sources" not in st.session_state:
+        st.session_state["sources"] = []
 
     def get_text():
         input_text = st.text_input("You: ", "", key="input")
@@ -68,10 +89,17 @@ if __name__ == "__main__":
         st.session_state.past.append(user_input)
 
     if st.session_state["generated"]:
+        # Add empty sources if no soures detected
+        if len(st.session_state["sources"]) < len(st.session_state["generated"]):
+            st.session_state["sources"].append([])
         # For reply in generated reply
         for i in range(len(st.session_state["generated"]) - 1, -1, -1):
             # Add generated reply to AI chat
-            message(st.session_state["generated"][i])  # ), key=str(i))
+            if st.session_state["sources"][i]:
+                message(st.session_state["generated"][i] + '\n\nSources:\n' + '\n'.join(st.session_state["sources"][i]))  # ), key=str(i))
+            else:
+                message(st.session_state["generated"][i])  # ), key=str(i))
+            
             # Add generated reply to human chat
             message(
                 st.session_state["past"][i], is_user=True
