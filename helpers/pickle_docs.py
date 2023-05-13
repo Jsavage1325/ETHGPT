@@ -4,9 +4,10 @@ from langchain.document_loaders import ReadTheDocsLoader, GitbookLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
+from config import OPENAI_API_KEY
 import subprocess
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 
 def download_docs(docs_url: str, output_name: str):
@@ -58,9 +59,10 @@ def ingest_docs(docs_loc: str = "rtdocs", docs_name: str = "langchain", gitbook=
 
 
 #ingest_docs(docs_loc="https://docs.uniswap.org/", docs_name="uniswap", gitbook=True)
+ingest_docs(docs_loc="https://docs.uniswap.org/sdk/v3/", docs_name="uniswap_v3", gitbook=True)
 #ingest_docs(docs_loc="https://docs.1inch.io/", docs_name="1inch", gitbook=True)
 #ingest_docs(docs_loc = 'https://docs.aave.com/developers', docs_name = 'aave', gitbook = True)
-ingest_docs(docs_loc = 'https://docs.gnosischain.com/', docs_name = 'gnosis', gitbook = True)
+#ingest_docs(docs_loc = 'https://docs.gnosischain.com/', docs_name = 'gnosis', gitbook = True)
 
 
 """embeddings = OpenAIEmbeddings()

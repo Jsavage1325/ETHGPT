@@ -1,9 +1,7 @@
-from tools.code.PythonCodeWriter import PythonCodeWriter
-from experts.airstack_expert import AirstackContextProvider
-from experts.langchain_expert import LangchainContextProvider
-from experts.aave_expert import AaveContextProvider
-from tools.ethsend.send_eth import EthSend
-from tools.ethsend.get_eth_balance import GetEthBalance
+from experts import AirstackContextProvider, LangchainContextProvider, AaveContextProvider, OneInchContextProvider, GnosisContextProvider, UniswapContextProvider
+from tools.ethsend import EthSend, GetEthBalance
+from tools.code import PythonCodeWriter
+from tools.etherscan import EtherScanGetContractABI, EtherScanGetContractCode, EtherScanGetTXStatus
 from langchain.llms import OpenAI
 from langchain.agents import initialize_agent, AgentType
 from langchain import SerpAPIWrapper
@@ -14,12 +12,18 @@ class AIHelper:
         self.search = SerpAPIWrapper()
 
         self.tools = [
+            EtherScanGetContractABI(),
+            EtherScanGetContractCode(),
+            EtherScanGetTXStatus(),
             PythonCodeWriter(),
             EthSend(),
             GetEthBalance(),
             LangchainContextProvider(),
             AirstackContextProvider(),
             AaveContextProvider(),
+            OneInchContextProvider(),
+            GnosisContextProvider(),
+            UniswapContextProvider(),
         ]
 
         self.agent = initialize_agent(
@@ -40,5 +44,5 @@ class AIHelper:
 
 if __name__ == "__main__":
     helper = AIHelper()
-    query = "Can you write a GraphQL query to get all NFTs owned by spink.eth?"
+    query = "What is the balance of spink.eth?"
     helper.run_query(query)
