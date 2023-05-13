@@ -6,9 +6,10 @@ import faiss
 
 class AirstackContextProvider(BaseTool):
     name = "airstack_context_provider"
-    description = """Airstack expert who will tell you how to write GraphQL queries for Airstack. 
-                    You will provide this expert with a summary of what you think is most relevant.
-                    It will return a additional information for you to use to build a GraphQL query."""
+    description = """Airstack expert who will tell you how to write GraphQL queries for Airstack.
+                    Endpoints: Tokens,NFTs,Balances,Domains,Wallet,Socials,Transfers,NFT Sales,Collection Stats,Marketplace Stats
+                    You will provide this expert with a summary of what you want to do.
+                    Returns text or a GraphQL query."""
 
     def load_vector_store(self):
         """
