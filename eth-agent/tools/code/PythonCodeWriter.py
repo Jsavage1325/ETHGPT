@@ -1,10 +1,12 @@
 """
 A file which contains a tool to write Python code. The tool is just a wrapper for a LLM to write python code
 """
+from typing import Optional
+
+from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
+                                         CallbackManagerForToolRun)
 from langchain.llms import OpenAI
 from langchain.tools import BaseTool
-from typing import Optional
-from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
 
 
 class PythonCodeWriter(BaseTool):

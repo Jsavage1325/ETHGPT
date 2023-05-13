@@ -1,6 +1,7 @@
-from eth_account import Account
-import secrets
 import json
+import secrets
+
+from eth_account import Account
 
 priv = secrets.token_hex(32)
 private_key = "0x" + priv

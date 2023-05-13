@@ -4,33 +4,19 @@ import faiss
 import pandas as pd
 import requests
 import streamlit as st
+# load env
+from dotenv import load_dotenv
 from langchain.chains import ConversationChain
 from langchain.docstore import InMemoryDocstore
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
-from langchain.memory import (
-    CombinedMemory,
-    ConversationBufferMemory,
-    ConversationSummaryMemory,
-    VectorStoreRetrieverMemory,
-)
+from langchain.memory import (CombinedMemory, ConversationBufferMemory,
+                              ConversationSummaryMemory,
+                              VectorStoreRetrieverMemory)
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import FAISS
 
-
-# load env
-from dotenv import load_dotenv
-
 load_dotenv()
-
-from langchain.llms import OpenAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import ConversationChain
-from langchain.memory import (
-    ConversationBufferMemory,
-    CombinedMemory,
-    ConversationSummaryMemory,
-)
 
 from datetime import datetime
 
@@ -39,7 +25,9 @@ from langchain.chains import ConversationChain
 from langchain.docstore import InMemoryDocstore
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
-from langchain.memory import VectorStoreRetrieverMemory
+from langchain.memory import (CombinedMemory, ConversationBufferMemory,
+                              ConversationSummaryMemory,
+                              VectorStoreRetrieverMemory)
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import FAISS
 

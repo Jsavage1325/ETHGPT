@@ -1,8 +1,11 @@
+from typing import Optional
+
+from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
+                                         CallbackManagerForToolRun)
+from langchain.embeddings import OpenAIEmbeddings
 from langchain.tools import BaseTool
 from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
-from typing import Optional
+
 
 class OneInchContextProvider(BaseTool):
     name = "one_inch_context_provider"

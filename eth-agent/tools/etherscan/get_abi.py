@@ -1,5 +1,6 @@
 from tools.etherscan.EtherScanBase import EtherScanBase
 
+
 class EtherScanGetContractABI(EtherScanBase):
     name = 'get_ether_contract_abi'
     description = 'Gets the ABI for an ethereum contract using an address, where possible.'

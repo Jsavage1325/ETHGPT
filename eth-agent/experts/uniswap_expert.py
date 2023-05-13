@@ -1,12 +1,11 @@
-from langchain.tools import BaseTool
 import pickle
-from langchain.callbacks.manager import (
-    AsyncCallbackManagerForToolRun,
-    CallbackManagerForToolRun,
-)
 from typing import Optional
-from langchain.vectorstores import FAISS
+
+from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
+                                         CallbackManagerForToolRun)
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.tools import BaseTool
+from langchain.vectorstores import FAISS
 
 
 class UniswapContextProvider(BaseTool):

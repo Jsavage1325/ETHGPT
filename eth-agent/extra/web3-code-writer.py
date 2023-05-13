@@ -6,12 +6,10 @@ from typing import Dict, List
 # load env variables
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
-from langchain.prompts.chat import (
-    ChatPromptTemplate,
-    HumanMessagePromptTemplate,
-    SystemMessagePromptTemplate,
-)
 from langchain.memory import ConversationBufferWindowMemory
+from langchain.prompts.chat import (ChatPromptTemplate,
+                                    HumanMessagePromptTemplate,
+                                    SystemMessagePromptTemplate)
 
 load_dotenv()
 
@@ -67,10 +65,9 @@ return a full python file that can be run from main.py, including the example co
 
 """
 
-from langchain.llms import OpenAI
 from langchain.chains import ConversationChain
+from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferMemory
-
 
 chat = ChatOpenAI(temperature=0)
 

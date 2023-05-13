@@ -1,6 +1,7 @@
 from langchain.tools import BaseTool
 from tools.etherscan.EtherScanBase import EtherScanBase
 
+
 class EtherScanGetTXStatus(EtherScanBase):
     name = 'get_ether_tx_status'
     description = 'Gets the receipt status for an ethereum transaction using a transaction hash, where possible.'

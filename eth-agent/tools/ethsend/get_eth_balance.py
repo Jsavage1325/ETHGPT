@@ -1,5 +1,6 @@
 from tools.ethsend.EthTransferBase import EthTransferBase
 
+
 class GetEthBalance(EthTransferBase):
     name = 'get_eth_balance'
     description = 'A tool to get balance of ethereum (ETH) using an ethereum address. Returns a numerical value of the amount of eth in the wallet.'

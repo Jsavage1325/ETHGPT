@@ -1,5 +1,6 @@
 from tools.ethsend.EthTransferBase import EthTransferBase
 
+
 class EthSend(EthTransferBase):
     name = 'send_eth'
     description = 'A tool to send ethereum (ETH) via the smart contract, requires an address and an amount in the form 0xD245Fbe9F1F7cf8944528bA1CeD277272f0da061 and 0.001. Returns transaction id if successful'

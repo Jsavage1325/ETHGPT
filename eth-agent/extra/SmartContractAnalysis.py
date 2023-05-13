@@ -1,10 +1,12 @@
 """
 A file which contains a prompt to get an LLM to analyse a smart contract, looking for vulnerabilities. The tool is just a wrapper for a LLM.
 """
+from typing import Optional
+
+from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
+                                         CallbackManagerForToolRun)
 from langchain.llms import OpenAI
 from langchain.tools import BaseTool
-from typing import Optional
-from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
 
 
 class SmartContractAnalysis(BaseTool):

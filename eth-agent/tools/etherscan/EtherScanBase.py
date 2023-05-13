@@ -1,6 +1,7 @@
 import requests
 from langchain.tools import BaseTool
 
+
 class EtherScanBase(BaseTool):
     """
     Base class for EtherScan interactions

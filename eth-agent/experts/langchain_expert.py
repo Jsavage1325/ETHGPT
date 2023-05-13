@@ -1,7 +1,10 @@
-from langchain.tools import BaseTool
 import pickle
-from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
 from typing import Optional
+
+from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
+                                         CallbackManagerForToolRun)
+from langchain.tools import BaseTool
+
 
 class LangchainContextProvider(BaseTool):
     name = "langchain_context_provider"

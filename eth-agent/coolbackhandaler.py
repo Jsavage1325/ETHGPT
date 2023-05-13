@@ -1,11 +1,12 @@
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
+import streamlit as st
 # from dotenv import load_dotenv
 from ai_helper import AIHelper
-import streamlit as st
-from streamlit_chat import message
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import AgentFinish
+from streamlit_chat import message
+
 
 class StreamlitCallbackHandler(BaseCallbackHandler):
     """Callback Handler that prints to Streamlit."""
@@ -61,7 +62,7 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
 
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="ETHGPT - God of Web3", page_icon=":robot:")
+    st.set_page_config(page_title="ETHGPT", page_icon=":robot:")
     st.header("ETHGPT")
 
     sch = StreamlitCallbackHandler()

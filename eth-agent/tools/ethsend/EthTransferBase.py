@@ -1,6 +1,7 @@
 from langchain.tools import BaseTool
 from web3 import Web3
 
+
 class EthTransferBase(BaseTool):
     """
     Base class for EtherScan interactions, loads in wallet_address and private_key
