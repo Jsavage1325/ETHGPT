@@ -22,6 +22,7 @@ class AIHelper:
     def __init__(self, callback_handler=None):
         self.llm = OpenAI(temperature=0.0)
         self.search = SerpAPIWrapper()
+        self.callback_handler = callback_handler
 
         self.tools = [
             EtherScanGetContractABI(),
@@ -43,7 +44,7 @@ class AIHelper:
             self.llm,
             agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
             verbose=True,
-            callback_handler=callback_handler,
+            # callback_handler=callback_handler,
         )
 
     def run_query(self, query):
@@ -51,7 +52,8 @@ class AIHelper:
             {
                 "input": query,
                 "chat_history": [],
-            }
+            },
+            callbacks=[self.callback_handler]
         )
 
 

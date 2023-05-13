@@ -5,7 +5,6 @@ from langchain.callbacks.manager import (
     CallbackManagerForToolRun,
 )
 from typing import Optional
-import faiss
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 
