@@ -1,10 +1,14 @@
 from langchain.tools import BaseTool
 import pickle
-from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
+from langchain.callbacks.manager import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from typing import Optional
 import faiss
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
+
 
 class AirstackContextProvider(BaseTool):
     name = "airstack_context_provider"
@@ -18,7 +22,7 @@ class AirstackContextProvider(BaseTool):
         Loads the airstack vector store from pickle into a local file
         """
         global vector_store
-        vector_store = FAISS.load_local('airstack_baby_faiss_index', OpenAIEmbeddings())
+        vector_store = FAISS.load_local("airstack_faiss_index", OpenAIEmbeddings())
         # with open("airstack_baby_faiss_index/index.pkl", "rb") as f:
         #     vector_store, something_strange = pickle.load(f)
         #     print(vector_store)
@@ -30,8 +34,10 @@ class AirstackContextProvider(BaseTool):
         self.load_vector_store()
         res = vector_store.similarity_search(query)
         if res:
-            return res[0].page_content + res[1].page_content + res[2].page_content
-    
-    async def _arun(self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None) -> str:
+            return res[0].page_content  # + res[1].page_content + res[2].page_content
+
+    async def _arun(
+        self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None
+    ) -> str:
         """Use the tool asynchronously."""
         raise NotImplementedError("airstack_doc_search does not support async")
