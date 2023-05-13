@@ -1,6 +1,6 @@
 from experts import (
     AirstackContextProvider,
-    LangchainContextProvider,
+    # LangchainContextProvider,
     AaveContextProvider,
     OneInchContextProvider,
     GnosisContextProvider,
@@ -31,7 +31,7 @@ class AIHelper:
             PythonCodeWriter(),
             EthSend(),
             GetEthBalance(),
-            LangchainContextProvider(),
+            # LangchainContextProvider(),
             AirstackContextProvider(),
             AaveContextProvider(),
             OneInchContextProvider(),

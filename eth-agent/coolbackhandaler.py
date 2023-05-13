@@ -15,18 +15,16 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
         """Initialize callback handler."""
         self.color = color
 
-    # def on_chain_start(
-    #     self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
-    # ) -> None:
-    #     """Print out that we are entering a chain."""
-    #     print('starting new chain')
-    #     class_name = serialized["name"]
-    #     st.markdown(f"> Entering new **{class_name}** chain...")
+    def on_chain_start(
+        self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
+    ) -> None:
+        """Print out that we are entering a chain."""
+        st.markdown('started new chain')
 
     def on_tool_start(
         self, serialized: Dict[str, Any], input_str: str, **kwargs: Any
     ) -> Any:
-        st.markdown(f"Querying {serialized['name']}.")
+        st.markdown(f"Asking {serialized['name']}: {input_str}")
 
     # def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
     #     """Print out that we finished a chain."""
@@ -73,15 +71,16 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
         """Run on agent end."""
         print('agent finished')
         # st.markdown(finish.log)
-        st.session_state["generated"] = [finish.log]
+        print(dir(finish))
+        st.session_state["generated"].append(finish.log.split('Final Answer:')[1])
 
 
 # load env
 # load_dotenv()
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="LangChain Demo", page_icon=":robot:")
-    st.header("LangChain Demo")
+    st.set_page_config(page_title="ETHGPT - God of Web3", page_icon=":robot:")
+    st.header("ETHGPT")
 
     helper = AIHelper(StreamlitCallbackHandler())
 
@@ -112,10 +111,11 @@ if __name__ == "__main__":
     print(st.session_state)
 
     if st.session_state["generated"]:
+        # For reply in generated reply
         for i in range(len(st.session_state["generated"]) - 1, -1, -1):
+            # Add generated reply to AI chat
             message(st.session_state["generated"][i])  # ), key=str(i))
-            print(st.session_state["generated"])
-            print(st.session_state["past"])
+            # Add generated reply to human chat
             message(
                 st.session_state["past"][i], is_user=True
             )  # , key=str(i) + "_user")
