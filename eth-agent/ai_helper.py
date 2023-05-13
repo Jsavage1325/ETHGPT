@@ -1,17 +1,12 @@
 from tools.code.PythonCodeWriter import PythonCodeWriter
 from experts.airstack_expert import AirstackContextProvider
 from experts.langchain_expert import LangchainContextProvider
-from SmartContractAnalysis import SmartContractAnalysis
-from tools.etherscan.get_abi import EtherScanGetContractABI
-from tools.etherscan.get_code import EtherScanGetContractCode
-from tools.etherscan.get_tx_status import EtherScanGetTXStatus
+from experts.aave_expert import AaveContextProvider
 from tools.ethsend.send_eth import EthSend
 from tools.ethsend.get_eth_balance import GetEthBalance
 from langchain.llms import OpenAI
 from langchain.agents import initialize_agent, AgentType
-from langchain.tools import Tool
 from langchain import SerpAPIWrapper
-
 
 class AIHelper:
     def __init__(self):
@@ -24,6 +19,7 @@ class AIHelper:
             GetEthBalance(),
             LangchainContextProvider(),
             AirstackContextProvider(),
+            AaveContextProvider(),
         ]
 
         self.agent = initialize_agent(
