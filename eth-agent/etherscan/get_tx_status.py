@@ -1,9 +1,9 @@
 from langchain.tools import BaseTool
-from EtherScanBase import EtherScanBase
+from etherscan.EtherScanBase import EtherScanBase
 
 class EtherScanGetTXStatus(EtherScanBase):
     name = 'get_ether_tx_status'
-    desription = 'Gets the receipt status for an ethereum transaction using a transaction hash, where possible.'
+    description = 'Gets the receipt status for an ethereum transaction using a transaction hash, where possible.'
 
     def _run(self, txhash: str):
         """
@@ -15,4 +15,10 @@ class EtherScanGetTXStatus(EtherScanBase):
             "txhash": txhash,
         }
         return self._get(payload)
+
+    def _arun(self, address: str):
+        """
+        Gets the etherscan contract code
+        """
+        raise NotImplementedError()
         
