@@ -31,6 +31,7 @@ hexbytes==0.3.0
 idna==3.4
 importlib-metadata==6.6.0
 ipfshttpclient==0.8.0a2
+isort==5.12.0
 Jinja2==3.1.2
 jsonschema==4.17.3
 langchain==0.0.167
@@ -72,6 +73,7 @@ smmap==5.0.0
 SQLAlchemy==2.0.13
 streamlit==1.22.0
 streamlit-chat==0.0.2.2
+streamlit-wallet-connect==0.1.0
 tenacity==8.2.2
 toml==0.10.2
 toolz==0.12.0
