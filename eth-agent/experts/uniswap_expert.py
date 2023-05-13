@@ -29,8 +29,10 @@ class UniswapContextProvider(BaseTool):
         """
         self.load_vector_store()
         res = vector_store.similarity_search(query)
+        # link to document (?)
+        # res[0].metadata['source']
         if res:
-            return res[0].page_content + res[1].page_content + res[2].page_content
+            return f"{res[0].page_content} {res[1].page_content} {res[2].page_content} ||| {res[0].metadata['source']},{res[1].metadata['source']},{res[2].metadata['source']}"
 
     async def _arun(
         self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None

@@ -24,7 +24,7 @@ class LangchainContextProvider(BaseTool):
         self.load_vector_store()
         res = vector_store.similarity_search(query)
         if res:
-            return query + res[0].page_content + res[1].page_content + res[2].page_content
+            return res[0].page_content + res[1].page_content + res[2].page_content
     
     async def _arun(self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None) -> str:
         """Use the tool asynchronously."""
