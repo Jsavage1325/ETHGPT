@@ -25,11 +25,13 @@ def download_docs(docs_url: str, output_name: str):
 def ingest_docs(docs_loc: str = "rtdocs", docs_name: str = "langchain", gitbook=False):
     """Get documents from web pages."""
     if gitbook:
+        print('using gitbook loader')
         loader = GitbookLoader(docs_loc, load_all_paths=True)
     else:
-        loader = ReadTheDocsLoader(docs_loc, features="html.parser")
+        print('using rtdocs loader')
+        loader = ReadTheDocsLoader(docs_loc, features="html.parser",errors='ignore')
     raw_documents = loader.load()
-    text_splitter = RecursiveCharacterTextSplitter()
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 750,chunk_overlap  = 125,length_function = len)
     print("raw docs")
     print(raw_documents)
     documents = text_splitter.split_documents(raw_documents)
@@ -48,12 +50,19 @@ def ingest_docs(docs_loc: str = "rtdocs", docs_name: str = "langchain", gitbook=
     vectorstore.save_local(f"{docs_name}_faiss_index")
 
 
-# download_docs('https://docs.airstack.xyz', 'airstack')
+##download_docs('https://python.langchain.com/', 'langchain')
 # download_docs('https://python.langchain.com/', 'langchain')
-ingest_docs(
-    docs_loc="https://docs.airstack.xyz", docs_name="airstack_baby", gitbook=True
-)
+#ingest_docs(
+#    docs_loc="https://docs.airstack.xyz", docs_name="airstack", gitbook=True
+#)
 
-embeddings = OpenAIEmbeddings()
+
+#ingest_docs(docs_loc="https://docs.uniswap.org/", docs_name="uniswap", gitbook=True)
+#ingest_docs(docs_loc="https://docs.1inch.io/", docs_name="1inch", gitbook=True)
+#ingest_docs(docs_loc = 'https://docs.aave.com/developers', docs_name = 'aave', gitbook = True)
+ingest_docs(docs_loc = 'https://docs.gnosischain.com/', docs_name = 'gnosis', gitbook = True)
+
+
+"""embeddings = OpenAIEmbeddings()
 vectorstore = FAISS.load_local("airstack_faiss_index", embeddings)
-print(vectorstore)
+print(vectorstore)"""
