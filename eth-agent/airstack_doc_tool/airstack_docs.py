@@ -3,6 +3,8 @@ import pickle
 from langchain.callbacks.manager import AsyncCallbackManagerForToolRun, CallbackManagerForToolRun
 from typing import Optional
 import faiss
+from langchain.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
 
 class AirstackContextProvider(BaseTool):
     name = "airstack_context_provider"
@@ -16,8 +18,7 @@ class AirstackContextProvider(BaseTool):
         Loads the airstack vector store from pickle into a local file
         """
         global vector_store
-        print([i for i in dir(faiss) if '__' not in i])
-        vector_store = faiss.load_local('airstack_baby_faiss_index')
+        vector_store = FAISS.load_local('airstack_baby_faiss_index', OpenAIEmbeddings())
         # with open("airstack_baby_faiss_index/index.pkl", "rb") as f:
         #     vector_store, something_strange = pickle.load(f)
         #     print(vector_store)
