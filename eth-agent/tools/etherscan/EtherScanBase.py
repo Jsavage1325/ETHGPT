@@ -1,4 +1,3 @@
-from etherscan.EtherScanCreds import EtherScanCreds
 import requests
 from langchain.tools import BaseTool
 

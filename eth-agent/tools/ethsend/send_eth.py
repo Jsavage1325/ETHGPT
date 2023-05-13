@@ -1,4 +1,4 @@
-from ethsend.EthTransferBase import EthTransferBase
+from tools.ethsend.EthTransferBase import EthTransferBase
 
 class EthSend(EthTransferBase):
     name = 'send_eth'

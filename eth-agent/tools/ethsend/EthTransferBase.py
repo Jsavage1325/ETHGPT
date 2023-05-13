@@ -1,5 +1,4 @@
 from langchain.tools import BaseTool
-import json
 from web3 import Web3
 
 class EthTransferBase(BaseTool):

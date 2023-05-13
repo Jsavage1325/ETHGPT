@@ -1,5 +1,5 @@
 from langchain.tools import BaseTool
-from etherscan.EtherScanBase import EtherScanBase
+from tools.etherscan.EtherScanBase import EtherScanBase
 
 class EtherScanGetTXStatus(EtherScanBase):
     name = 'get_ether_tx_status'

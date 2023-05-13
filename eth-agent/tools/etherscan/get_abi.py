@@ -1,5 +1,4 @@
-from langchain.tools import BaseTool
-from etherscan.EtherScanBase import EtherScanBase
+from tools.etherscan.EtherScanBase import EtherScanBase
 
 class EtherScanGetContractABI(EtherScanBase):
     name = 'get_ether_contract_abi'
