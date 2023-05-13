@@ -80,7 +80,7 @@ if __name__ == "__main__":
     st.set_page_config(page_title="LangChain Demo", page_icon=":robot:")
     st.header("LangChain Demo")
 
-    helper = AIHelper()
+    helper = AIHelper(StreamlitCallbackHandler())
 
     if "generated" not in st.session_state:
         st.session_state["generated"] = []
@@ -95,14 +95,14 @@ if __name__ == "__main__":
     user_input = get_text()
 
     if user_input:
-        helper.agent.run(
-            {
-                "input": user_input,
-                "chat_history": [],
-            }
-        )
+        output = helper.run_query(user_input)
+
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(output)
 
     if st.session_state["generated"]:
         for i in range(len(st.session_state["generated"]) - 1, -1, -1):
-            message(st.session_state["generated"][i], key=str(i))
-            message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+            message(st.session_state["generated"][i])  # ), key=str(i))
+            message(
+                st.session_state["past"][i], is_user=True
+            )  # , key=str(i) + "_user")
