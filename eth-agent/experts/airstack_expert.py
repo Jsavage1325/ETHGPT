@@ -32,7 +32,7 @@ class AirstackContextProvider(BaseTool):
         self.load_vector_store()
         res = vector_store.similarity_search(query)
         if res:
-            return f"{res[0].page_content} {res[1].page_content} {res[2].page_content} ||| {res[0].metadata['source']},{res[1].metadata['source']},{res[2].metadata['source']}"
+            return f"{res[0].page_content} {res[1].page_content} ||| {res[0].metadata['source']},{res[1].metadata['source']}"
 
     async def _arun(
         self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None

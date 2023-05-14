@@ -11,7 +11,7 @@ class EtherScanGetContractCode(EtherScanBase):
         """
         payload = {
             "module": "contract",
-            "action": "getabi",
+            "action": "getsourcecode",
             "address": address,
         }
         return self._get(payload)

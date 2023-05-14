@@ -12,7 +12,7 @@ class EtherScanGetContractABI(EtherScanBase):
         """
         payload = {
             "module": "contract",
-            "action": "getsourcecode",
+            "action": "getabi",
             "address": address,
         }
         return self._get(payload)

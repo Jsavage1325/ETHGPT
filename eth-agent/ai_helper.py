@@ -10,7 +10,6 @@ from tools.code import PythonCodeWriter
 from tools.etherscan import (EtherScanGetContractABI, EtherScanGetContractCode,
                              EtherScanGetTXStatus)
 from tools.ethsend import EthSend, GetEthBalance
-from wallet_connect import wallet_connect
 
 
 class AIHelper:
@@ -20,10 +19,10 @@ class AIHelper:
         self.callback_handler = callback_handler
 
         self.tools = [
-            # EtherScanGetContractABI(),
+            EtherScanGetContractABI(),
             # Tools
             EtherScanGetContractCode(),
-            # EtherScanGetTXStatus(),
+            EtherScanGetTXStatus(),
             PythonCodeWriter(),
             EthSend(),
             GetEthBalance(),
@@ -34,6 +33,7 @@ class AIHelper:
             OneInchContextProvider(),
             GnosisContextProvider(),
             UniswapContextProvider(),
+            # Web3PyContextProvider(),
         ]
 
         self.agent = initialize_agent(
